@@ -1,4 +1,4 @@
-My E-Commerce Portal
+# My E-Commerce Portal
 
 Functionality Available 
 **Add a product with Images**
@@ -15,21 +15,15 @@ podman network create mynet
 
 # Then build and run all services
 podman-compose up --build -d
-
-# Build the services in nocache mode while you are frequently changing files
-podman compose -f podman-compose.yaml build --no-cache
-
-# Create mynet network name before running the services.
- podman network create mynet
  
-🌐 Access Points
-Service	URL (host)	Notes
+# 🌐 Access Points
+**My e-Commerce Portal** 
 React frontend	http://localhost:3000
-	Your app UI
+**Your app UI**
 Spring Boot backend	http://localhost:8080
-	REST API
+**REST API**
 pgAdmin	http://localhost:8088
-	Database UI
+**Database UI**
 Postgres DB	localhost:5432	For local clients or pgAdmin
 🧩 Container Networking Inside Podman
 
