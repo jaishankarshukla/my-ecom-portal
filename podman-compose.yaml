@@ -77,11 +77,3 @@ networks:
 # 💾 Volume for Postgres data
 volumes:
   postgres_data:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device:  /mnt/d/JaiData/devtools/github/myecomproject/pgdata   #./../../pgdata   # source folder on host
-
-
-#ALways Run build in no--cache mode : podman compose -f podman-compose.yaml build --no-cache
