@@ -1,0 +1,87 @@
+
+services:
+  # 🗄️ PostgreSQL database
+  db:
+    image: docker.io/library/postgres:18
+    container_name: my-app-database
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 999999
+      POSTGRES_DB: ecomdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mynet
+
+  # 🧩 pgAdmin web UI
+  pgadmin:
+    image: docker.io/dpage/pgadmin4:latest
+    container_name: postgredb-pgadmin-1
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: 888888
+    ports:
+      - "8088:80"
+    depends_on:
+      - db
+    networks:
+      - mynet
+
+  # ☕ Spring Boot backend (myecomapp)
+  myecomapp:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: myecomapp
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my-app-database:5432/ecomdb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 999999
+      # Optional: tell Spring which port to use
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - mynet
+
+  # ⚛️ React frontend (myecomwebapp)
+  myecomwebapp:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: myecomwebapp
+    restart: always
+    environment:
+      # React app runs in browser, so backend must be reachable from host
+      REACT_APP_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - myecomapp
+    networks:
+      - mynet
+
+# 🌐 Shared network
+networks:
+  mynet:
+    driver: bridge
+    external: true
+
+# 💾 Volume for Postgres data
+volumes:
+  postgres_data:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device:  /mnt/d/JaiData/devtools/github/myecomproject/pgdata   #./../../pgdata   # source folder on host
+
+
+#ALways Run build in no--cache mode : podman compose -f podman-compose.yaml build --no-cache
