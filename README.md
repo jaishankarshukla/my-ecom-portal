@@ -9,11 +9,12 @@ Functionality Available
 
 #Note: This is an ongoing project and I will be adding many features as I go along. Please email me if you have questions.
 
-✅ Build & Run Everything
+✅ Build & Run Everything  
+
 ** Make sure the network exists**  
 podman network create mynet  
 
-# Build and run all services  
+** Build and run all services**  
 podman-compose up --build -d
  
 # 🌐 Access Points
