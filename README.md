@@ -25,11 +25,6 @@ Spring Boot backend	http://localhost:8080
 **REST API**  
 pgAdmin	http://localhost:8088  
 **Database UI**  
-Postgres DB	localhost:5432	For local clients or pgAdmin
+Postgres DB	localhost:5432  
 
-
-And reference them in your YAML like:
-
-environment:
-  POSTGRES_USER: ${POSTGRES_USER}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+Please get passwords from Podman Compose yaml file.
